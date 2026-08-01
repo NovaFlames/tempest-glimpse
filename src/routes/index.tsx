@@ -341,8 +341,6 @@ function Dashboard() {
       {forecast && !busy && (
         <section className="mt-6 space-y-6">
           <div className="panel p-6">
-            <div className="grid gap-4 sm:grid-cols-3">
-              {[
             <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
               {[
                 { label: "Scope", value: forecast.country },

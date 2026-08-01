@@ -162,8 +162,33 @@ function PredictionCard({ p }: { p: Prediction }) {
   );
 }
 
+const WINDOWS = ["2 weeks", "1 month", "6 months"] as const;
+
+const COUNTRY_SUGGESTIONS = [
+  "United States",
+  "India",
+  "China",
+  "Russia",
+  "Ukraine",
+  "Israel",
+  "Iran",
+  "Japan",
+  "Germany",
+  "United Kingdom",
+  "France",
+  "Brazil",
+  "Nigeria",
+  "Pakistan",
+  "Indonesia",
+  "Turkey",
+  "Mexico",
+  "South Africa",
+];
+
 function Dashboard() {
   const [focus, setFocus] = useState("");
+  const [country, setCountry] = useState("");
+  const [window, setWindow] = useState<string>(WINDOWS[1]);
   const forecastFn = useServerFn(runForecast);
 
   const mutation = useMutation<Forecast, Error, void>({

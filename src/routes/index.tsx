@@ -343,6 +343,10 @@ function Dashboard() {
           <div className="panel p-6">
             <div className="grid gap-4 sm:grid-cols-3">
               {[
+            <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
+              {[
+                { label: "Scope", value: forecast.country },
+                { label: "Window", value: `Next ${forecast.window}` },
                 { label: "Headlines analyzed", value: String(forecast.headlinesAnalyzed) },
                 { label: "Forecasts issued", value: String(forecast.predictions.length) },
                 {

@@ -52,11 +52,25 @@ const clamp = (n: unknown, min: number, max: number, fallback: number) => {
 const strings = (value: unknown): string[] =>
   Array.isArray(value) ? value.map((v) => String(v)).slice(0, 6) : [];
 
-export async function generateForecast(focus?: string): Promise<Forecast> {
+export type ForecastOptions = {
+  focus?: string | undefined;
+  country?: string | undefined;
+  window?: string | undefined;
+};
+
+export async function generateForecast(options: ForecastOptions = {}): Promise<Forecast> {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) throw new Error("AI is not configured for this project.");
 
-  const headlines = await fetchRecentHeadlines();
+  const country = options.country?.trim();
+  const window = options.window?.trim() || "6 months";
+  const focus = options.focus?.trim();
+
+  let headlines = await fetchRecentHeadlines(8, country);
+  if (headlines.length < 12 && country) {
+    // Country-scoped feeds can be sparse; top up with global signal.
+    headlines = [...headlines, ...(await fetchRecentHeadlines(6))];
+  }
   if (headlines.length === 0) {
     throw new Error("Could not reach the news feeds right now. Try again in a moment.");
   }
@@ -72,8 +86,11 @@ export async function generateForecast(focus?: string): Promise<Forecast> {
     model,
     system: SYSTEM_PROMPT,
     prompt: `Today is ${new Date().toUTCString()}.
+
+Prediction window: the NEXT ${window}. Every prediction must plausibly occur inside this window, and each "timeframe" field must fall within it (use sub-ranges of the window, never longer).
+Geographic scope: ${country ? `${country} — every prediction must concern ${country} directly, or a cross-border event that materially affects it. Set "region" to a specific area within ${country} where possible.` : "Global — spread predictions across different regions."}
 ${focus ? `Analyst focus request: ${focus}\n` : ""}
-Recent headlines gathered from live news feeds (last 7 days):
+Recent headlines gathered from live news feeds:
 ${digest}
 
 Analyse these against your historical precursor templates and produce the JSON forecast.`,
@@ -107,6 +124,8 @@ Analyse these against your historical precursor templates and produce the JSON f
 
   return {
     generatedAt: new Date().toISOString(),
+    window,
+    country: country || "Global",
     headlinesAnalyzed: headlines.length,
     sourcesSampled: Array.from(new Set(headlines.map((h) => h.source))).slice(0, 12),
     globalOutlook: String(parsed.globalOutlook ?? ""),

@@ -37,11 +37,13 @@ function parseItems(xml: string, topic: string, limit: number): Headline[] {
   });
 }
 
-export async function fetchRecentHeadlines(perFeed = 8): Promise<Headline[]> {
+export async function fetchRecentHeadlines(perFeed = 8, country?: string): Promise<Headline[]> {
+  const scope = country?.trim();
   const results = await Promise.allSettled(
     FEEDS.map(async ({ topic, query }) => {
+      const scoped = scope ? `(${query}) AND "${scope}"` : query;
       const url = `https://news.google.com/rss/search?q=${encodeURIComponent(
-        `${query} when:7d`,
+        `${scoped} when:14d`,
       )}&hl=en-US&gl=US&ceid=US:en`;
       const response = await fetch(url, {
         headers: { "User-Agent": "Mozilla/5.0 (compatible; RiskRadar/1.0)" },

@@ -23,6 +23,8 @@ export type Prediction = {
 
 export type Forecast = {
   generatedAt: string;
+  window: string;
+  country: string;
   headlinesAnalyzed: number;
   sourcesSampled: string[];
   globalOutlook: string;

@@ -124,6 +124,8 @@ Analyse these against your historical precursor templates and produce the JSON f
 
   return {
     generatedAt: new Date().toISOString(),
+    window,
+    country: country || "Global",
     headlinesAnalyzed: headlines.length,
     sourcesSampled: Array.from(new Set(headlines.map((h) => h.source))).slice(0, 12),
     globalOutlook: String(parsed.globalOutlook ?? ""),

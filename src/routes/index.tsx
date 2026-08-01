@@ -166,8 +166,15 @@ function Dashboard() {
   const [focus, setFocus] = useState("");
   const forecastFn = useServerFn(runForecast);
 
-  const mutation = useMutation<Forecast, Error, string>({
-    mutationFn: (value) => forecastFn({ data: value ? { focus: value } : {} }),
+  const mutation = useMutation<Forecast, Error, void>({
+    mutationFn: () =>
+      forecastFn({
+        data: {
+          window,
+          ...(country.trim() ? { country: country.trim() } : {}),
+          ...(focus.trim() ? { focus: focus.trim() } : {}),
+        },
+      }),
   });
 
   const forecast = mutation.data;
@@ -190,19 +197,65 @@ function Dashboard() {
             </p>
           </div>
 
-          <div className="w-full max-w-sm space-y-3">
-            <label className="label-mono block text-muted-foreground" htmlFor="focus">
-              Optional analyst focus
-            </label>
-            <input
-              id="focus"
-              value={focus}
-              onChange={(e) => setFocus(e.target.value)}
-              placeholder="e.g. South Asia, energy infrastructure…"
-              className="w-full rounded-md border border-input bg-background px-3 py-2 font-mono text-sm outline-none focus:border-primary"
-            />
+          <div className="w-full max-w-sm space-y-4">
+            <div>
+              <label className="label-mono block text-muted-foreground" htmlFor="window">
+                Prediction window
+              </label>
+              <div className="mt-2 grid grid-cols-3 gap-2">
+                {WINDOWS.map((w) => (
+                  <button
+                    key={w}
+                    id={w === WINDOWS[0] ? "window" : undefined}
+                    type="button"
+                    onClick={() => setWindow(w)}
+                    aria-pressed={window === w}
+                    className={`label-mono rounded-md border px-2 py-2 transition-colors ${
+                      window === w
+                        ? "border-primary bg-primary/15 text-primary"
+                        : "border-input text-muted-foreground hover:border-primary/50"
+                    }`}
+                  >
+                    {w}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="label-mono block text-muted-foreground" htmlFor="country">
+                Country / region
+              </label>
+              <input
+                id="country"
+                list="country-suggestions"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                placeholder="Leave blank for global"
+                className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 font-mono text-sm outline-none focus:border-primary"
+              />
+              <datalist id="country-suggestions">
+                {COUNTRY_SUGGESTIONS.map((c) => (
+                  <option key={c} value={c} />
+                ))}
+              </datalist>
+            </div>
+
+            <div>
+              <label className="label-mono block text-muted-foreground" htmlFor="focus">
+                Optional analyst focus
+              </label>
+              <input
+                id="focus"
+                value={focus}
+                onChange={(e) => setFocus(e.target.value)}
+                placeholder="e.g. energy infrastructure…"
+                className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 font-mono text-sm outline-none focus:border-primary"
+              />
+            </div>
+
             <button
-              onClick={() => mutation.mutate(focus.trim())}
+              onClick={() => mutation.mutate()}
               disabled={busy}
               className="label-mono flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
             >
@@ -217,7 +270,7 @@ function Dashboard() {
               )}
             </button>
             <p className="label-mono text-muted-foreground">
-              Ingests ~60 live headlines · takes 20-40s
+              Scans live headlines · takes 20-40s
             </p>
           </div>
         </div>

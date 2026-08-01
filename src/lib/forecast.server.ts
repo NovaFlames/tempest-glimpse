@@ -90,17 +90,17 @@ Analyse these against your historical precursor templates and produce the JSON f
     .map((raw) => {
       const p = raw as Record<string, unknown>;
       return {
-        title: String(p.title ?? "Unnamed risk"),
-        category: String(p.category ?? "Armed conflict"),
-        region: String(p.region ?? "Global"),
-        probability: clamp(p.probability, 0, 100, 40),
-        severity: clamp(p.severity, 1, 5, 3),
-        timeframe: String(p.timeframe ?? "3-12 months"),
-        historicalAnalogue: String(p.historicalAnalogue ?? "—"),
-        matchedPattern: String(p.matchedPattern ?? "—"),
-        earlySignals: strings(p.earlySignals),
-        watchIndicators: strings(p.watchIndicators),
-        rationale: String(p.rationale ?? ""),
+        title: String(p["title"] ?? "Unnamed risk"),
+        category: String(p["category"] ?? "Armed conflict"),
+        region: String(p["region"] ?? "Global"),
+        probability: clamp(p["probability"], 0, 100, 40),
+        severity: clamp(p["severity"], 1, 5, 3),
+        timeframe: String(p["timeframe"] ?? "3-12 months"),
+        historicalAnalogue: String(p["historicalAnalogue"] ?? "—"),
+        matchedPattern: String(p["matchedPattern"] ?? "—"),
+        earlySignals: strings(p["earlySignals"]),
+        watchIndicators: strings(p["watchIndicators"]),
+        rationale: String(p["rationale"] ?? ""),
       };
     })
     .sort((a, b) => b.probability * b.severity - a.probability * a.severity);

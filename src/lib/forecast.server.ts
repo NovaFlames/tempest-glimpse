@@ -53,9 +53,9 @@ const strings = (value: unknown): string[] =>
   Array.isArray(value) ? value.map((v) => String(v)).slice(0, 6) : [];
 
 export type ForecastOptions = {
-  focus?: string;
-  country?: string;
-  window?: string;
+  focus?: string | undefined;
+  country?: string | undefined;
+  window?: string | undefined;
 };
 
 export async function generateForecast(options: ForecastOptions = {}): Promise<Forecast> {

@@ -31,7 +31,7 @@ Respond with ONLY a JSON object, no markdown fences:
     }
   ]
 }
-Return 6 to 8 predictions, spread across at least four different categories, ordered by probability x severity descending.`;
+Return 6 to 8 predictions, ordered by probability x severity descending. Spread them across at least four different categories UNLESS the user supplies an analyst focus, in which case staying on that focus always overrides category variety.`;
 
 function extractJson(text: string): unknown {
   const cleaned = text

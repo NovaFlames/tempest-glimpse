@@ -89,7 +89,7 @@ export async function generateForecast(options: ForecastOptions = {}): Promise<F
 
 Prediction window: the NEXT ${window}. Every prediction must plausibly occur inside this window, and each "timeframe" field must fall within it (use sub-ranges of the window, never longer).
 Geographic scope: ${country ? `${country} — every prediction must concern ${country} directly, or a cross-border event that materially affects it. Set "region" to a specific area within ${country} where possible.` : "Global — spread predictions across different regions."}
-${focus ? `Analyst focus request: ${focus}\n` : ""}
+${focus ? `Analyst focus (MANDATORY): "${focus}". Every single prediction must be directly about ${focus} — the incident type, the affected sector/system, or its immediate knock-on effects. Discard any pattern match that is not about ${focus}, even if it scores higher. If the headline set is thin on ${focus}, still stay on topic and lower the probabilities instead of drifting to other subjects. Categories may repeat when the focus demands it.\n` : ""}
 Recent headlines gathered from live news feeds:
 ${digest}
 

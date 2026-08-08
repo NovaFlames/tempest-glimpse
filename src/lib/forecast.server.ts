@@ -66,9 +66,9 @@ export async function generateForecast(options: ForecastOptions = {}): Promise<F
   const window = options.window?.trim() || "6 months";
   const focus = options.focus?.trim();
 
-  let headlines = await fetchRecentHeadlines(8, country);
-  if (headlines.length < 12 && country) {
-    // Country-scoped feeds can be sparse; top up with global signal.
+  let headlines = await fetchRecentHeadlines(8, country, focus);
+  if (headlines.length < 12 && (country || focus)) {
+    // Narrow feeds can be sparse; top up with global signal.
     headlines = [...headlines, ...(await fetchRecentHeadlines(6))];
   }
   if (headlines.length === 0) {

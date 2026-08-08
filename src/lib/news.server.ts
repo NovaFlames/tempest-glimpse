@@ -37,10 +37,23 @@ function parseItems(xml: string, topic: string, limit: number): Headline[] {
   });
 }
 
-export async function fetchRecentHeadlines(perFeed = 8, country?: string): Promise<Headline[]> {
+export async function fetchRecentHeadlines(
+  perFeed = 8,
+  country?: string,
+  focus?: string,
+): Promise<Headline[]> {
   const scope = country?.trim();
+  const focusQuery = focus?.trim();
+  const feeds = focusQuery
+    ? [
+        // Focus-led feeds get priority and extra depth so the model has real signal on the topic.
+        { topic: `Focus: ${focusQuery}`, query: focusQuery },
+        ...FEEDS.map((f) => ({ topic: f.topic, query: `(${f.query}) AND (${focusQuery})` })),
+        ...FEEDS,
+      ]
+    : FEEDS;
   const results = await Promise.allSettled(
-    FEEDS.map(async ({ topic, query }) => {
+    feeds.map(async ({ topic, query }) => {
       const scoped = scope ? `(${query}) AND "${scope}"` : query;
       const url = `https://news.google.com/rss/search?q=${encodeURIComponent(
         `${scoped} when:14d`,

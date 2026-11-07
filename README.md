@@ -2,9 +2,6 @@
 
 > AI-assisted early-warning intelligence for emerging global incidents.
 
-[![Built with Lovable](https://img.shields.io/badge/Built%20with-Lovable-ff4785?style=flat-square)](https://lovable.dev)
-[![Repository](https://img.shields.io/badge/GitHub-NovaFlames%2Ftempest--glimpse-181717?style=flat-square&logo=github)](https://github.com/NovaFlames/tempest-glimpse)
-
 Sentinel AI is an experimental forecasting platform that uses large language models to analyze historical and current news, identify patterns that have preceded major incidents, and surface potential emerging risks through an interactive dashboard.
 
 > **Important:** Sentinel AI generates exploratory signals, not definitive predictions. It must not be used as the sole basis for emergency response, public policy, investment, safety, or other high-impact decisions.

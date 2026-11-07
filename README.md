@@ -110,12 +110,6 @@ git commit -m "feat: describe your change"
 git push origin feature/describe-your-change
 ```
 
-## Built with Lovable
-
-This project was created with [Lovable](https://lovable.dev). Continue development in the [Lovable editor](https://lovable.dev/projects/8f0ccdbd-2066-4ce2-9866-b9d3dbb9d30e).
-
-Lovable keeps the project synchronized with this repository, allowing changes to be made either in the editor or through a local Git workflow.
-
 ## Responsible use
 
 AI-generated forecasts can be incomplete, biased, outdated, or wrong. Historical correlation does not establish causation, and the absence of a detected signal does not mean an incident is unlikely.
@@ -144,8 +138,3 @@ Issues and pull requests are welcome. When contributing, please include:
 
 This repository does not currently specify a license. Until a license is added, no permission is granted to use, modify, or redistribute the code beyond what is permitted by applicable law.
 
-## Links
-
-- [Lovable](https://lovable.dev)
-- [Lovable project editor](https://lovable.dev/projects/8f0ccdbd-2066-4ce2-9866-b9d3dbb9d30e)
-- [GitHub repository](https://github.com/NovaFlames/tempest-glimpse)

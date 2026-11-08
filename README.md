@@ -2,6 +2,8 @@
 
 > AI-assisted early-warning intelligence for emerging global incidents.
 
+**Published app:** [https://tempest-glimpse.lovable.app/](https://tempest-glimpse.lovable.app/)
+
 Sentinel AI is an experimental forecasting platform that uses large language models to analyze historical and current news, identify patterns that have preceded major incidents, and surface potential emerging risks through an interactive dashboard.
 
 > **Important:** Sentinel AI generates exploratory signals, not definitive predictions. It must not be used as the sole basis for emergency response, public policy, investment, safety, or other high-impact decisions.
@@ -134,4 +136,3 @@ Issues and pull requests are welcome. When contributing, please include:
 ## License
 
 This repository does not currently specify a license. Until a license is added, no permission is granted to use, modify, or redistribute the code beyond what is permitted by applicable law.
-
